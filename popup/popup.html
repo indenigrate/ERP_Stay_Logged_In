@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IIT KGP ERP - Stay Logged In</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">IIT KGP ERP</h1>
+          <p class="brand-subtitle">Session Guardian</p>
+        </div>
+      </div>
+      <label class="switch" title="Toggle Extension On/Off">
+        <input type="checkbox" id="mainToggle" checked>
+        <span class="slider"></span>
+      </label>
+    </header>
+
+    <!-- Main Status Banner -->
+    <div class="status-banner" id="statusBanner">
+      <div class="status-indicator active" id="statusDot"></div>
+      <div class="status-text">
+        <span class="status-heading" id="statusHeading">Active &amp; Guarding</span>
+        <span class="status-subtext" id="statusSubtext">Monitoring erp.iitkgp.ac.in</span>
+      </div>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon pings-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <div class="stat-value" id="pingsCount">0</div>
+        <div class="stat-label">Pings Sent</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon clicks-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <div class="stat-value" id="clicksCount">0</div>
+        <div class="stat-label">Auto-Dismissed</div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="actions-row">
+      <button class="btn btn-primary" id="btnManualPing">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+        </svg>
+        <span>Ping ERP Now</span>
+      </button>
+      <button class="btn btn-secondary" id="btnTestDetection" title="Scan current tab for timeout modal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span>Detect Modal</span>
+      </button>
+    </div>
+
+    <!-- Core Settings -->
+    <div class="settings-section">
+      <div class="section-title">Preferences</div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <span class="setting-title">Auto-Click Popups</span>
+          <span class="setting-desc">Clicks "Stay Logged In" when modal appears</span>
+        </div>
+        <label class="switch mini">
+          <input type="checkbox" id="autoClickToggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <span class="setting-title">Keep-Alive Interval</span>
+          <span class="setting-desc">Background heartbeat frequency</span>
+        </div>
+        <select class="select-dropdown" id="pingIntervalSelect">
+          <option value="3">Every 3 mins</option>
+          <option value="5" selected>Every 5 mins (Recommended)</option>
+          <option value="8">Every 8 mins</option>
+          <option value="10">Every 10 mins</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <span class="setting-title">Show In-Page Toasts</span>
+          <span class="setting-desc">Discreet badge when session refreshes</span>
+        </div>
+        <label class="switch mini">
+          <input type="checkbox" id="toastsToggle" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Advanced Settings Collapsible -->
+    <details class="advanced-details">
+      <summary class="advanced-summary">
+        <span>Advanced Customization</span>
+        <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </summary>
+      <div class="advanced-content">
+        <div class="form-group">
+          <label for="customPingUrl">Keep-Alive URL</label>
+          <input type="text" id="customPingUrl" class="text-input" placeholder="/IIT_ERP3/keepAlive.htm" value="/IIT_ERP3/keepAlive.htm">
+          <span class="field-hint">ERP endpoint pinged with session cookies.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="customSelector">Modal Button Selector</label>
+          <input type="text" id="customSelector" class="text-input" placeholder="#sessionModal button" value="#sessionModal button">
+          <span class="field-hint">Direct selector targeting the extend button in #sessionModal.</span>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-danger btn-sm" id="btnResetStats">Reset Stats &amp; Logs</button>
+        </div>
+      </div>
+    </details>
+
+    <!-- Recent Activity Log -->
+    <div class="activity-section">
+      <div class="activity-header">
+        <span class="section-title">Recent Activity</span>
+        <span class="activity-badge" id="lastActionTime">No actions yet</span>
+      </div>
+      <div class="activity-list" id="activityList">
+        <div class="empty-log">Extension is active. Activity will appear here.</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span>Runs 100% locally &bull; No passwords stored</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
